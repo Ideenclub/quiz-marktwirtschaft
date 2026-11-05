@@ -1,14 +1,16 @@
 # quiz-marktwirtschaft
 
-Lernquizzes für Wirtschaft-Politik (Gesamtschule NRW). Gespielt wird im Browser, gedacht für iPads.
+Lernstrecken und Quizzes für Wirtschaft-Politik (Gesamtschule NRW). Gespielt wird im Browser, gedacht für iPads.
 
 Übersicht: https://ideenclub.github.io/quiz-marktwirtschaft/
 
-## Quizzes
+## Angebote
 
-| Quiz | Klasse | Datum | Live-Link |
+| Angebot | Klasse | Datum | Live-Link |
 |---|---|---|---|
-| Soziale Marktwirtschaft & Rente | 10 | 05.11.2026 | https://ideenclub.github.io/quiz-marktwirtschaft/soziale-marktwirtschaft-rente/ |
+| Lernstrecke: Soziale Marktwirtschaft & Rente (13 Stationen, mit Bonus-Quiz unter `quiz/`) | 10 | 05.11.2026 | https://ideenclub.github.io/quiz-marktwirtschaft/soziale-marktwirtschaft-rente/ |
+
+Lehrkraftseiten (nicht von den Schülerseiten verlinkt): `<ordner>/lehrkraft.html`
 
 ## Regel
 
