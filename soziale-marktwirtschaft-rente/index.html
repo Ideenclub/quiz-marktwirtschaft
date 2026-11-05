@@ -32,6 +32,7 @@
   }
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:19px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
 button,input,textarea{font:inherit;color:inherit}
@@ -226,6 +227,8 @@ label.lbl{display:block;font-weight:700;margin-bottom:6px}
 .fb .sol{font-weight:700}
 .fb .again{font-size:16px;color:var(--muted)}
 .fb .bonus{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:#7a3a10;background:#fde7cf;border-radius:999px;padding:3px 12px;font-size:16px;animation:pop .6s ease}
+
+.fb .bonus svg{width:18px;height:18px;flex:none}
 @media (prefers-color-scheme: dark){.fb .bonus{background:#4a2c12;color:#ffd6ad}}
 .fb ol{margin:6px 0;padding-left:24px}
 .fb .btn{margin-top:12px}
