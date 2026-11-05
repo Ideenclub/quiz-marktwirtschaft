@@ -1,0 +1,1181 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<title>Quiz: Soziale Marktwirtschaft &amp; Rente</title>
+<style>
+:root{
+  --accent:#7B2D43; --accent-hover:#65233a; --accent-soft:#f3e4e9; --on-accent:#ffffff;
+  --slate:#2F4A5C; --slate-ink:#ffffff; --slate-soft:#dbe4ea;
+  --bg:#F6F1EA; --surface:#ffffff; --mist:#E6EDF1;
+  --text:#1c2830; --muted:#566570; --line:#d6dde2; --rule:#dfe8ee;
+  --ok:#1d7346; --ok-bg:#e2f3e9; --ok-line:#7cc39b;
+  --bad:#ad2a22; --bad-bg:#fbe6e4; --bad-line:#e59a93;
+  --merk-bg:#f3e4e9; --merk-line:#7B2D43;
+  --shadow:0 1px 2px rgba(20,35,45,.06),0 6px 20px rgba(20,35,45,.08);
+  --radius:16px;
+  --font:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --accent:#b85674; --accent-hover:#c96986; --accent-soft:#3b2029; --on-accent:#ffffff;
+    --slate:#1e3342; --slate-ink:#eef3f6; --slate-soft:#2a4252;
+    --bg:#11181d; --surface:#1b252c; --mist:#22303a;
+    --text:#e8eef1; --muted:#a3b2bc; --line:#33434e; --rule:#26343d;
+    --ok:#74d39f; --ok-bg:#163327; --ok-line:#2f7a52;
+    --bad:#ff9a90; --bad-bg:#3b1d1a; --bad-line:#8c3a33;
+    --merk-bg:#35202a; --merk-line:#c96986;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:19px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+button,input,textarea{font:inherit;color:inherit}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer}
+a{color:inherit}
+.wrap{width:100%;max-width:760px;margin:0 auto;padding:0 20px}
+/* Kopfleiste */
+.top{background:var(--slate);color:var(--slate-ink);position:sticky;top:0;z-index:20;padding-top:env(safe-area-inset-top)}
+.top .wrap{padding-top:10px;padding-bottom:12px}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:16px;text-decoration:none;opacity:.9;padding:8px 10px 8px 0;min-height:44px}
+.back:hover{opacity:1;text-decoration:underline}
+.top-title{font-size:16px;font-weight:600;opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;text-align:center}
+.score{font-size:17px;font-weight:700;background:rgba(255,255,255,.14);padding:6px 12px;border-radius:999px;white-space:nowrap}
+.prog{margin-top:8px}
+.prog-meta{display:flex;justify-content:space-between;align-items:center;font-size:16px;gap:10px;min-height:28px}
+.prog-meta b{font-weight:700}
+.segs{display:flex;gap:6px;margin-top:6px}
+.seg{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.22);overflow:hidden}
+.seg i{display:block;height:100%;width:0;background:#f1c9d4;border-radius:99px;transition:width .35s ease}
+.streak{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:700;background:#f1c9d4;color:#4a1626;padding:3px 10px;border-radius:999px}
+.streak.pop{animation:pop .6s ease}
+@keyframes pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
+.streak svg{width:16px;height:16px}
+/* Hauptbereich */
+main{flex:1;padding:24px 0 28px}
+.screen{animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.panel{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 24px}
+h1{font-size:34px;line-height:1.15;margin:0 0 8px;color:var(--slate)}
+h2{font-size:26px;line-height:1.25;margin:0 0 12px;color:var(--slate)}
+@media (prefers-color-scheme: dark){h1,h2{color:#cfe0ea}}
+.sub{font-size:21px;color:var(--muted);margin:0 0 18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:12px 24px;border-radius:14px;border:2px solid transparent;font-size:19px;font-weight:700;text-align:center;transition:background .15s,transform .1s,border-color .15s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{background:var(--accent-hover)}
+.btn.primary:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--text)}
+.btn.ghost:hover{border-color:var(--slate)}
+.btn.full{width:100%}
+.btn svg{width:22px;height:22px;flex:none}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.actions .btn{flex:1 1 220px}
+/* Start */
+.hero{display:flex;gap:18px;align-items:center;margin-bottom:6px}
+.hero-ico{flex:none;width:84px;height:84px;border-radius:22px;background:var(--accent);color:#fff;display:grid;place-items:center}
+.hero-ico svg{width:54px;height:54px}
+.info{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 22px}
+.chip{background:var(--mist);border-radius:999px;padding:6px 14px;font-size:17px}
+.rounds{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:8px}
+.rounds li{display:flex;align-items:center;gap:14px;background:var(--mist);border-radius:12px;padding:10px 14px;font-size:18px}
+.rounds .ri{flex:none;width:40px;height:40px;border-radius:10px;background:var(--surface);color:var(--slate);display:grid;place-items:center}
+@media (prefers-color-scheme: dark){.rounds .ri{color:#cfe0ea}}
+.rounds .ri svg{width:28px;height:28px}
+.rounds .rn{font-weight:700;color:var(--accent);margin-right:4px}
+@media (prefers-color-scheme: dark){.rounds .rn{color:#e59ab0}}
+label.lbl{display:block;font-weight:700;margin-bottom:6px}
+.field{width:100%;min-height:56px;border:2px solid var(--line);border-radius:12px;background:var(--surface);padding:12px 16px;font-size:20px}
+.field:focus{outline:none;border-color:var(--slate)}
+.note{font-size:16px;color:var(--muted);margin:6px 0 0}
+/* Karteikarte */
+.icard{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border-top:8px solid var(--accent)}
+.icard-head{display:flex;align-items:center;gap:16px;padding:20px 24px 14px;border-bottom:2px solid var(--accent)}
+.icard-ico{flex:none;width:60px;height:60px;border-radius:14px;background:var(--mist);color:var(--slate);display:grid;place-items:center}
+@media (prefers-color-scheme: dark){.icard-ico{color:#cfe0ea}}
+.icard-ico svg{width:40px;height:40px}
+.kicker{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 2px}
+@media (prefers-color-scheme: dark){.kicker{color:#e59ab0}}
+.icard-head h2{margin:0;font-size:24px}
+.icard-body{padding:4px 24px 22px}
+.icard ul{margin:0;padding:0 0 0 22px;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 33px,var(--rule) 33px,var(--rule) 34px);background-position:0 0;line-height:34px;font-size:19px}
+.icard li{margin:0;padding:0}
+.icard li::marker{color:var(--accent)}
+.merk{margin-top:16px;background:var(--merk-bg);border-left:6px solid var(--merk-line);border-radius:10px;padding:14px 16px}
+.merk .mk{display:block;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:2px}
+@media (prefers-color-scheme: dark){.merk .mk{color:#e59ab0}}
+.merk strong{font-size:20px;line-height:1.4}
+.src{font-size:15px;color:var(--muted);margin:10px 0 0}
+/* Glossar */
+.term{background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;border-bottom:2px dotted var(--accent);cursor:help;line-height:inherit}
+.pop{position:absolute;z-index:60;max-width:320px;background:var(--slate);color:#fff;font-size:17px;line-height:1.4;padding:10px 14px;border-radius:10px;box-shadow:var(--shadow)}
+.pop b{display:block;font-size:15px;opacity:.85}
+/* Frage */
+.qhead{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:14px}
+.qtype{font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+.tool{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:8px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);font-size:17px;font-weight:600}
+.tool svg{width:20px;height:20px}
+.tool:disabled{opacity:.45;cursor:not-allowed}
+.tool.used{border-color:var(--accent);color:var(--accent)}
+@media (prefers-color-scheme: dark){.tool.used{color:#e59ab0}}
+.qtext{font-size:24px;line-height:1.35;font-weight:700;margin:0 0 18px}
+.case{display:flex;gap:14px;background:var(--mist);border-radius:14px;padding:14px 16px;margin-bottom:16px;font-size:20px}
+.case svg{flex:none;width:36px;height:36px;color:var(--slate)}
+@media (prefers-color-scheme: dark){.case svg{color:#cfe0ea}}
+.case b{display:block;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.statement{background:var(--mist);border-left:6px solid var(--slate);border-radius:10px;padding:16px 18px;font-size:22px;line-height:1.4;font-weight:600;margin:0 0 18px}
+.hint{display:flex;gap:12px;background:#fff7df;border:2px solid #ecd38b;color:#4e3d07;border-radius:12px;padding:12px 14px;margin:0 0 16px;font-size:18px}
+@media (prefers-color-scheme: dark){.hint{background:#332a10;border-color:#6b5a22;color:#f3e3ae}}
+.hint svg{flex:none;width:24px;height:24px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;min-height:60px;padding:12px 16px;border-radius:14px;border:2px solid var(--line);background:var(--surface);text-align:left;font-size:20px;line-height:1.3;transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:var(--slate)}
+.opt .lt{flex:none;width:34px;height:34px;border-radius:50%;background:var(--mist);display:grid;place-items:center;font-weight:700;font-size:17px}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok .lt{background:var(--ok);color:#fff}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad .lt{background:var(--bad);color:#fff}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.dim{opacity:.55}
+.tf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tf .opt{justify-content:center;font-weight:700;font-size:22px;min-height:68px}
+/* Kategorien */
+.cat-now{text-align:center;margin:4px 0 14px}
+.cat-now small{display:block;font-size:16px;color:var(--muted);margin-bottom:6px}
+.cat-item{display:inline-block;background:var(--slate);color:#fff;font-size:24px;font-weight:700;padding:14px 26px;border-radius:14px;animation:fade .25s ease}
+.cat-btns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.cat-btns .opt{justify-content:center;font-weight:700;font-size:21px;min-height:68px}
+.bins{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bin{background:var(--mist);border-radius:12px;padding:10px 12px;min-height:90px}
+.bin h4{margin:0 0 6px;font-size:16px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.bin ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.bin li{font-size:17px;padding:6px 10px;border-radius:8px;background:var(--surface);border-left:5px solid var(--ok)}
+.bin li.bad{border-left-color:var(--bad);background:var(--bad-bg)}
+.bin li small{display:block;font-size:14px;color:var(--bad)}
+/* Zuordnen */
+.match{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:12px}
+.mcol{display:grid;gap:10px;align-content:start}
+.mcol h4{margin:0;font-size:15px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.mi{position:relative;min-height:64px;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);text-align:left;font-size:18px;line-height:1.3}
+.mi.left{font-weight:700}
+.mi.sel{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-soft)}
+.mi.done{border-color:var(--ok);background:var(--ok-bg);cursor:default;padding-right:44px}
+.mi.wrong{border-color:var(--bad);background:var(--bad-bg);animation:shake .4s}
+.mi .pn{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:var(--ok);color:#fff;font-size:15px;font-weight:700;display:grid;place-items:center}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.mstat{font-size:16px;color:var(--muted);margin:12px 0 0}
+/* Lückentext */
+.gaptext{font-size:22px;line-height:2.3;margin:0 0 18px;background:var(--mist);border-radius:12px;padding:12px 18px}
+.slot{display:inline-flex;align-items:center;justify-content:center;min-width:130px;min-height:52px;vertical-align:middle;padding:4px 14px;margin:2px 2px;border-radius:10px;border:2px dashed var(--slate);background:var(--surface);font-size:20px;font-weight:700;line-height:1.2}
+.slot.active{border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.slot.filled{border-style:solid}
+.slot.ok{border-color:var(--ok);background:var(--ok-bg);border-style:solid}
+.slot.bad{border-color:var(--bad);background:var(--bad-bg);border-style:solid}
+.bank{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+.word{min-height:54px;padding:8px 18px;border-radius:12px;border:2px solid var(--line);background:var(--surface);font-size:20px;font-weight:600}
+.word:disabled{opacity:.3;cursor:default}
+.bank-l{font-size:16px;color:var(--muted);margin:0 0 8px}
+/* Reihenfolge */
+.steps{display:grid;gap:10px}
+.step{display:flex;align-items:center;gap:14px;min-height:64px;padding:10px 16px;border-radius:12px;border:2px solid var(--line);background:var(--surface);text-align:left;font-size:19px;line-height:1.3}
+.step .no{flex:none;width:38px;height:38px;border-radius:50%;border:2px dashed var(--line);display:grid;place-items:center;font-weight:700}
+.step.picked{border-color:var(--slate);background:var(--mist)}
+.step.picked .no{background:var(--slate);border:0;color:#fff}
+.step.ok{border-color:var(--ok);background:var(--ok-bg)}
+.step.ok .no{background:var(--ok)}
+.step.bad{border-color:var(--bad);background:var(--bad-bg)}
+.step.bad .no{background:var(--bad)}
+.row-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.row-btns .btn{flex:1 1 200px}
+/* Rechnen */
+.numrow{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+.numwrap{flex:1 1 220px;display:flex;align-items:center;border:2px solid var(--line);border-radius:14px;background:var(--surface);padding:0 16px}
+.numwrap:focus-within{border-color:var(--slate)}
+.numwrap input{flex:1;min-width:0;border:0;background:transparent;font-size:28px;font-weight:700;min-height:64px;outline:none}
+.numwrap span{font-size:24px;font-weight:700;color:var(--muted)}
+.numwrap.ok{border-color:var(--ok);background:var(--ok-bg)}
+.numwrap.bad{border-color:var(--bad);background:var(--bad-bg)}
+.numrow .btn{flex:0 1 180px}
+.err{color:var(--bad);font-size:17px;margin:8px 0 0;min-height:1em}
+/* Meinung */
+.op-area{margin-top:18px}
+.op-area textarea{width:100%;min-height:120px;border:2px solid var(--line);border-radius:12px;background:var(--surface);padding:12px 14px;font-size:19px;line-height:1.4;resize:vertical}
+.op-area textarea:focus{outline:none;border-color:var(--slate)}
+.op-start{font-weight:700;margin:0 0 6px}
+.wc{font-size:16px;color:var(--muted);margin:6px 0 0}
+.wc.okc{color:var(--ok)}
+.infobox{background:var(--mist);border-left:6px solid var(--slate);border-radius:12px;padding:14px 16px;margin-top:18px;font-size:19px}
+/* Feedback */
+.fb{margin-top:20px;border-radius:14px;padding:16px 18px;border:2px solid;animation:fade .25s ease}
+.fb.ok{background:var(--ok-bg);border-color:var(--ok-line)}
+.fb.bad{background:var(--bad-bg);border-color:var(--bad-line)}
+.fb.neutral{background:var(--mist);border-color:var(--line)}
+.fb-h{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;margin-bottom:6px}
+.fb.ok .fb-h{color:var(--ok)}
+.fb.bad .fb-h{color:var(--bad)}
+.fb-h svg{width:28px;height:28px;flex:none}
+.fb p{margin:6px 0}
+.fb .sol{font-weight:700}
+.fb .again{font-size:16px;color:var(--muted)}
+.fb .bonus{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:#7a3a10;background:#fde7cf;border-radius:999px;padding:3px 12px;font-size:16px;animation:pop .6s ease}
+@media (prefers-color-scheme: dark){.fb .bonus{background:#4a2c12;color:#ffd6ad}}
+.fb ol{margin:6px 0;padding-left:24px}
+.fb .btn{margin-top:12px}
+/* Modal */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(10,20,28,.55);display:flex;align-items:flex-start;justify-content:center;padding:max(20px,env(safe-area-inset-top)) 16px 20px;overflow-y:auto;animation:fade .2s ease}
+.modal-in{width:100%;max-width:720px}
+.modal-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;color:#fff}
+.modal-bar h3{margin:0;font-size:20px}
+.modal .btn.ghost{background:var(--surface);color:var(--text)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.tab{min-height:48px;padding:6px 16px;border-radius:12px;border:2px solid transparent;background:rgba(255,255,255,.18);color:#fff;font-size:17px;font-weight:700}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--text)}
+/* Ergebnis */
+.teacher{display:flex;align-items:center;gap:12px;background:var(--slate);color:#fff;border-radius:14px;padding:14px 18px;font-size:20px;font-weight:700;margin-bottom:16px}
+.teacher svg{width:28px;height:28px;flex:none}
+.res-top{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center}
+.ring{position:relative;width:150px;height:150px}
+.ring svg{width:150px;height:150px;transform:rotate(-90deg)}
+.ring .pc{position:absolute;inset:0;display:grid;place-items:center;font-size:34px;font-weight:800;color:var(--slate)}
+@media (prefers-color-scheme: dark){.ring .pc{color:#cfe0ea}}
+.rank{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-weight:800;font-size:20px;padding:8px 16px;border-radius:12px;margin:4px 0 8px}
+.rank svg{width:22px;height:22px}
+.who{font-size:18px;color:var(--muted);margin:0}
+.big{font-size:30px;font-weight:800;margin:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:20px 0}
+.stat{background:var(--mist);border-radius:12px;padding:10px 14px}
+.stat b{display:block;font-size:24px}
+.stat span{font-size:15px;color:var(--muted)}
+.rbars{display:grid;gap:8px;margin:0 0 20px}
+.rbar{display:grid;grid-template-columns:minmax(0,1fr) 80px;gap:10px;align-items:center;font-size:17px}
+.rbar .bar{grid-column:1/-1;height:10px;border-radius:99px;background:var(--mist);overflow:hidden;margin-top:-4px}
+.rbar .bar i{display:block;height:100%;background:var(--slate);border-radius:99px}
+@media (prefers-color-scheme: dark){.rbar .bar i{background:#7fa6bf}}
+.rbar .rv{text-align:right;font-weight:700}
+.merks{list-style:none;margin:0;padding:0;display:grid;gap:8px;counter-reset:m}
+.merks li{counter-increment:m;display:flex;gap:12px;background:var(--merk-bg);border-radius:10px;padding:10px 14px;font-size:18px}
+.merks li::before{content:counter(m);flex:none;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center;font-size:16px}
+.center{text-align:center}
+.bigico{width:76px;height:76px;margin:0 auto 10px;border-radius:20px;background:var(--mist);color:var(--slate);display:grid;place-items:center}
+@media (prefers-color-scheme: dark){.bigico{color:#cfe0ea}}
+.bigico svg{width:50px;height:50px}
+footer{font-size:14px;color:var(--muted);text-align:center;padding:14px 20px calc(18px + env(safe-area-inset-bottom))}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid #f1a33b;outline-offset:2px}
+@media (max-width:560px){
+  body{font-size:18px}
+  .panel{padding:20px 16px}
+  .wrap{padding:0 16px}
+  h1{font-size:28px}
+  .qtext{font-size:22px}
+  .match{grid-template-columns:1fr}
+  .res-top{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .top-title{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="top-row">
+      <a class="back" href="../"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Alle Quizzes</a>
+      <div class="top-title">Soziale Marktwirtschaft &amp; Rente</div>
+      <div class="score" id="score" aria-live="polite">0 Punkte</div>
+    </div>
+    <div class="prog" id="prog" hidden>
+      <div class="prog-meta"><span id="progText"></span><span id="streak"></span></div>
+      <div class="segs" id="segs"></div>
+    </div>
+  </div>
+</header>
+<main><div class="wrap" id="app"></div></main>
+<footer>Wirtschaft-Politik · Klasse 10 · Stand der Zahlen: November 2026</footer>
+<div id="pop" class="pop" hidden role="tooltip"></div>
+<div id="modalRoot"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- Piktogramme ---------- */
+var SV = 'viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+var ICON = {
+  scale: '<svg '+SV+'><path d="M32 10v42M20 54h24M12 18h40"/><circle cx="32" cy="12" r="3"/><path d="M12 18L5 36M12 18l7 18M52 18l-7 18M52 18l7 18"/><path d="M3 36h18a9 7 0 0 1-18 0zM43 36h18a9 7 0 0 1-18 0z"/></svg>',
+  shield: '<svg '+SV+'><path d="M32 6l20 8v15c0 13-8.5 23-20 29C20.5 52 12 42 12 29V14z"/><path d="M23 31l6.5 6.5L42 25"/></svg>',
+  gens: '<svg '+SV+'><circle cx="21" cy="15" r="7"/><path d="M9 56V39a12 12 0 0 1 24 0v17"/><circle cx="46" cy="27" r="5.5"/><path d="M37 56V44a9 9 0 0 1 18 0v12"/><path d="M33 44h4"/></svg>',
+  pyramid: '<svg '+SV+'><path d="M32 6v52"/><path d="M24 12h16M18 20h28M14 28h36M12 36h40M16 44h32M20 52h24"/></svg>',
+  trophy: '<svg '+SV+'><path d="M20 8h24v14a12 12 0 0 1-24 0z"/><path d="M20 13h-8a8 8 0 0 0 9 12M44 13h8a8 8 0 0 1-9 12"/><path d="M32 34v10M24 54h16M26 44h12v10H26z"/></svg>',
+  repeat: '<svg '+SV+'><path d="M10 30a22 22 0 0 1 38-14l6 6"/><path d="M54 10v12H42"/><path d="M54 34a22 22 0 0 1-38 14l-6-6"/><path d="M10 54V42h12"/></svg>',
+  person: '<svg '+SV+'><circle cx="32" cy="20" r="10"/><path d="M12 58a20 20 0 0 1 40 0"/></svg>'
+};
+var SI = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+var I = {
+  card: '<svg '+SI+'><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/></svg>',
+  bulb: '<svg '+SI+'><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg>',
+  ok: '<svg '+SI+'><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>',
+  bad: '<svg '+SI+'><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg>',
+  bolt: '<svg '+SI+'><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>',
+  arrow: '<svg '+SI+'><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  eye: '<svg '+SI+'><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+  star: '<svg '+SI+'><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>'
+};
+
+/* ---------- Inhalte ---------- */
+var ROUNDS = [
+{ id:'r1', short:'Markt mit Herz', icon:'scale',
+  title:'Markt mit Herz: Was ist Soziale Marktwirtschaft?',
+  card:{ points:[
+    '**Freie Marktwirtschaft:** Nur [[Angebot und Nachfrage|Angebot = was Firmen verkaufen wollen. Nachfrage = was Kunden kaufen wollen.]] entscheiden. Der Staat hält sich fast ganz heraus.',
+    '**Planwirtschaft** ([[Zentralverwaltungswirtschaft|Eine zentrale Stelle des Staates plant die ganze Wirtschaft.]]): Der Staat plant, was produziert wird und was es kostet.',
+    '**Soziale Marktwirtschaft:** verbindet beides. Der Markt sorgt für Wohlstand, der Staat für [[sozialen Ausgleich|Der Staat hilft Menschen, die wenig haben oder in Not sind.]].',
+    '**Markt:** freie Preise, [[Wettbewerb|Firmen konkurrieren um Kundinnen und Kunden.]], [[Privateigentum|Dinge dürfen Menschen oder Firmen selbst gehören.]], [[Gewerbefreiheit|Jeder darf ein eigenes Geschäft gründen.]], freie Berufswahl.',
+    '**Staat:** Regeln setzen, Wettbewerb schützen, Schwache absichern, Arbeitnehmer schützen.',
+    '**Ludwig Erhard** gilt als „Vater der Sozialen Marktwirtschaft“ (ab 1949 Wirtschaftsminister, später Bundeskanzler). China verbindet Markt mit starker staatlicher Lenkung.'
+  ], merk:'So viel Markt wie möglich, so viel Staat wie nötig.' },
+  qs:[
+  { id:'r1q1', type:'mc', q:'Wer entscheidet in der **Freien Marktwirtschaft**, was eine Ware kostet?',
+    opts:['Nur Angebot und Nachfrage','Der Staat mit einem Plan','Das Bundeskartellamt'], c:0,
+    hint:'In dieser Wirtschaftsordnung hält sich der Staat fast ganz heraus.',
+    exp:'In der Freien Marktwirtschaft entstehen die Preise nur durch Angebot und Nachfrage. Der Staat greift fast gar nicht ein.' },
+  { id:'r1q2', type:'mc', q:'In welcher Wirtschaftsordnung plant der Staat, was hergestellt wird und was es kostet?',
+    opts:['Zentralverwaltungswirtschaft (Planwirtschaft)','Freie Marktwirtschaft','Soziale Marktwirtschaft'], c:0,
+    hint:'Im zweiten Namen dieser Ordnung steckt schon das Wort „Plan“.',
+    exp:'In der Zentralverwaltungswirtschaft plant der Staat Produktion und Preise. Deshalb heißt sie auch Planwirtschaft.' },
+  { id:'r1q3', type:'cat', q:'Freie Marktwirtschaft oder Planwirtschaft? Tippe für jede Aussage die passende Ordnung an.',
+    cats:['Freie Marktwirtschaft','Planwirtschaft'],
+    items:[['Angebot und Nachfrage bestimmen den Preis',0],['Der Staat legt die Preise fest',1],['Der Staat hält sich fast ganz heraus',0],['Der Staat plant, was produziert wird',1],['Firmen konkurrieren frei um Kunden',0],['Eine zentrale Stelle plant die ganze Wirtschaft',1]],
+    hint:'Frag dich bei jeder Aussage: Bestimmt hier der Markt – oder der Staat?',
+    exp:'In der Freien Marktwirtschaft regeln Angebot, Nachfrage und Wettbewerb alles. In der Planwirtschaft plant der Staat Produktion und Preise.' },
+  { id:'r1q4', type:'mc', q:'Welche Aufgabe hat der **Staat** in der Sozialen Marktwirtschaft?',
+    opts:['Regeln setzen und Schwache absichern','Alle Preise festlegen','Sich ganz aus der Wirtschaft heraushalten','Bestimmen, wer welchen Beruf lernt'], c:0,
+    hint:'Denk an den Merksatz: so viel Staat wie nötig – nicht mehr, aber auch nicht weniger.',
+    exp:'Der Staat setzt Regeln, schützt den Wettbewerb und sichert Schwache ab. Preise und Berufswahl bleiben frei – das ist der Markt-Teil.' },
+  { id:'r1q5', type:'gap', q:'Ergänze die Sätze. Tippe ein Wort an, es springt in die nächste freie Lücke.',
+    text:'In der Sozialen Marktwirtschaft sorgt der {0} für Wohlstand. Der {1} sorgt für sozialen {2}.',
+    answers:['Markt','Staat','Ausgleich'], distract:['Plan','Gewinn','Streit'],
+    hint:'Wohlstand entsteht durch Angebot und Nachfrage. Für Hilfe bei Not ist die Politik zuständig.',
+    exp:'Der Markt schafft Wohlstand. Der Staat sorgt für sozialen Ausgleich, also für Hilfe für Schwächere.' },
+  { id:'r1q6', type:'match', q:'Was bedeuten diese Merkmale des Marktes? Tippe links einen Begriff und rechts die passende Erklärung.',
+    pairs:[['Wettbewerb','Firmen konkurrieren um Kundinnen und Kunden.'],['Gewerbefreiheit','Jeder darf ein eigenes Geschäft gründen.'],['Privateigentum','Dinge dürfen Menschen oder Firmen selbst gehören.'],['Freie Berufswahl','Du suchst deinen Beruf selbst aus.']],
+    hint:'Achte auf die Wortteile: „Gewerbe“ heißt Geschäft, „Eigentum“ ist das, was dir gehört.',
+    exp:'Alle vier sind Merkmale des Marktes. Sie geben Menschen und Firmen Freiheit.' },
+  { id:'r1q7', type:'tf', q:'Ludwig Erhard gilt als „Vater der Sozialen Marktwirtschaft“. Er war ab 1949 Wirtschaftsminister und später Bundeskanzler.', a:true,
+    hint:'Schau auf der Erinnerungskarte nach dem Namen – der Spickzettel ist kostenlos.',
+    exp:'Ludwig Erhard prägte als Wirtschaftsminister ab 1949 die Soziale Marktwirtschaft. Später wurde er Bundeskanzler.' },
+  { id:'r1q8', type:'tf', q:'China verbindet Marktwirtschaft mit starker staatlicher Planung und Lenkung.', a:true,
+    hint:'Es gibt nicht nur reine Formen. Viele Länder mischen Markt und Staat.',
+    exp:'In China gibt es Märkte. Der Staat plant und lenkt dort aber viel stärker als bei uns.' }
+  ]},
+{ id:'r2', short:'Was macht sie sozial?', icon:'shield',
+  title:'Was macht unsere Marktwirtschaft sozial?',
+  card:{ points:[
+    '**[[Mindestlohn|Der niedrigste Stundenlohn, den ein Betrieb zahlen darf.]]:** 13,90 € pro Stunde (seit 1.1.2026). Er schützt vor Hungerlöhnen.',
+    '**Kindergeld:** 259 € pro Kind und Monat.',
+    '**[[Grundsicherungsgeld|Bis zum 30.06.2026 hieß es „Bürgergeld“.]]:** sichert das [[Existenzminimum|Das Geld, das man mindestens zum Leben braucht.]]. Erwachsene: 563 € im Monat plus Miete und Heizung.',
+    '**Arbeitslosengeld I:** für alle, die vorher versichert gearbeitet haben. Etwa 60 % vom letzten [[Nettolohn|Der Lohn, der nach allen Abzügen auf dem Konto ankommt.]], mit Kind 67 %.',
+    '**Bundeskartellamt:** schützt den Wettbewerb und verhindert Preisabsprachen.',
+    '**5 Sozialversicherungen:** Kranken-, Pflege-, Renten-, Arbeitslosen-, Unfallversicherung. Die Unfallversicherung zahlt der Arbeitgeber allein, die anderen zahlen beide gemeinsam.'
+  ], merk:'Der Staat schützt Arbeitnehmer (z. B. Kündigungsschutz), Verbraucher (z. B. Lebensmittelkontrollen) und Menschen in Not.' },
+  qs:[
+  { id:'r2q1', type:'cat', q:'**Markt oder Staat?** Tippe für jeden Begriff an, wohin er gehört.',
+    cats:['Markt','Staat'],
+    items:[['Mindestlohn',1],['Freie Preise',0],['Kindergeld',1],['Wettbewerb zwischen Firmen',0],['Bundeskartellamt',1],['Angebot und Nachfrage',0],['Grundsicherungsgeld',1],['Privateigentum',0]],
+    hint:'Alles, was der Staat bezahlt, vorschreibt oder kontrolliert, gehört zum Staat.',
+    exp:'Zum Markt gehören freie Preise, Wettbewerb, Angebot und Nachfrage sowie Privateigentum. Mindestlohn, Kindergeld, Grundsicherungsgeld und Bundeskartellamt sind der soziale Teil – den übernimmt der Staat.' },
+  { id:'r2q2', type:'case', scene:'Lea ist 19 Jahre alt. Sie jobbt in einem Café. Ihr Chef zahlt ihr 9 € pro Stunde.',
+    q:'Welche Hilfe des Staates passt?', opts:['Der Mindestlohn','Das Kindergeld','Das Grundsicherungsgeld','Das Arbeitslosengeld I'], c:0,
+    hint:'Es geht um die Höhe ihres Stundenlohns.',
+    exp:'Der Mindestlohn liegt bei 13,90 € pro Stunde. 9 € sind zu wenig – Leas Chef muss mehr zahlen.' },
+  { id:'r2q3', type:'num', q:'Lea arbeitet 10 Stunden zum Mindestlohn von 13,90 € pro Stunde. Wie viel verdient sie [[brutto|vor allen Abzügen]]?',
+    a:139, unit:'€',
+    hint:'Mal 10 ist leicht: Das Komma rutscht eine Stelle nach rechts.',
+    exp:'10 × 13,90 € = 139 €. Das ist ihr Bruttolohn, also der Lohn vor allen Abzügen.' },
+  { id:'r2q4', type:'case', scene:'Herr Demir hat 10 Jahre in einer Firma gearbeitet und war dort versichert. Jetzt hat er seinen Job verloren.',
+    q:'Welche Hilfe des Staates passt?', opts:['Das Arbeitslosengeld I','Das Grundsicherungsgeld','Das Kindergeld','Der Mindestlohn'], c:0,
+    hint:'Er hat vorher gearbeitet und in eine Versicherung eingezahlt.',
+    exp:'Herr Demir war in der Arbeitslosenversicherung. Deshalb bekommt er Arbeitslosengeld I, etwa 60 % seines letzten Nettolohns. Grundsicherungsgeld gibt es erst, wenn kein oder zu wenig Einkommen da ist.' },
+  { id:'r2q5', type:'case', scene:'Zwei große Tankstellenketten sprechen sich heimlich ab. Beide verlangen für Benzin denselben hohen Preis.',
+    q:'Wer schützt hier den Wettbewerb?', opts:['Das Bundeskartellamt','Die Lebensmittelkontrolle','Die Rentenversicherung','Die Unfallversicherung'], c:0,
+    hint:'Es geht um Preise und Marktmacht – nicht um eine Versicherung.',
+    exp:'Preisabsprachen schaden dem Wettbewerb und den Kunden. Das Bundeskartellamt verhindert solche Absprachen und zu viel Marktmacht.' },
+  { id:'r2q6', type:'mc', q:'Wie viel Kindergeld gibt es 2026?',
+    opts:['259 € pro Kind und Monat','563 € pro Kind und Monat','259 € pro Familie und Jahr','139 € pro Kind und Monat'], c:0,
+    hint:'Kindergeld wird jeden Monat gezahlt – für jedes einzelne Kind.',
+    exp:'Für jedes Kind gibt es 259 € im Monat. 563 € ist der Regelsatz beim Grundsicherungsgeld für Erwachsene.' },
+  { id:'r2q7', type:'gap', q:'Ergänze die Sätze zum Grundsicherungsgeld.',
+    text:'Das Grundsicherungsgeld sichert das {0}. Erwachsene bekommen {1} € im Monat. Zusätzlich übernimmt der Staat die {2} und die Heizung.',
+    answers:['Existenzminimum','563','Miete'], distract:['Vermögen','259','Urlaubsreise'],
+    hint:'Existenzminimum heißt: das, was man mindestens zum Leben braucht. 259 € ist das Kindergeld.',
+    exp:'Das Grundsicherungsgeld (bis 30.06.2026 „Bürgergeld“) sichert das Existenzminimum: 563 € für Erwachsene, dazu Miete und Heizung.' },
+  { id:'r2q8', type:'match', q:'Was macht welche Hilfe? Tippe links und rechts die passenden Paare an.',
+    pairs:[['Mindestlohn','schützt vor Hungerlöhnen'],['Grundsicherungsgeld','sichert das Existenzminimum'],['Bundeskartellamt','verhindert Preisabsprachen'],['Arbeitslosengeld I','etwa 60 % vom letzten Nettolohn']],
+    hint:'Fang mit dem Paar an, bei dem du dir am sichersten bist.',
+    exp:'Jede Hilfe hat ihre Aufgabe: Lohn schützen, Existenz sichern, Wettbewerb schützen, Arbeitslose absichern.' },
+  { id:'r2q9', type:'tf', q:'Die Unfallversicherung bezahlen Arbeitnehmer und Arbeitgeber gemeinsam.', a:false,
+    hint:'Bei einer der fünf Sozialversicherungen gibt es eine Ausnahme.',
+    exp:'Die Unfallversicherung zahlt der Arbeitgeber allein. Die anderen vier Sozialversicherungen zahlen Arbeitnehmer und Arbeitgeber gemeinsam.' },
+  { id:'r2q10', type:'mc', q:'Welche Versicherung gehört **nicht** zu den fünf Säulen der Sozialversicherung?',
+    opts:['Die Autoversicherung','Die Pflegeversicherung','Die Unfallversicherung','Die Arbeitslosenversicherung'], c:0,
+    hint:'Zähle die fünf Säulen auf. Eine Antwort passt nicht in deine Liste.',
+    exp:'Die fünf Säulen sind Kranken-, Pflege-, Renten-, Arbeitslosen- und Unfallversicherung. Eine Autoversicherung gehört nicht dazu.' }
+  ]},
+{ id:'r3', short:'Der Generationenvertrag', icon:'gens',
+  title:'Wer zahlt die Rente? Der Generationenvertrag',
+  card:{ points:[
+    'Wer angestellt arbeitet oder eine Ausbildung macht, zahlt Pflichtbeiträge in die **gesetzliche Rentenversicherung**.',
+    'Der Beitrag ist **18,6 % vom [[Bruttolohn|Lohn vor allen Abzügen]]**. 9,3 % zahlst du, 9,3 % dein Betrieb.',
+    'Das Geld wird nicht gespart, sondern sofort an die heutigen Rentner ausgezahlt: **[[Umlageverfahren|Was reinkommt, wird sofort wieder ausgezahlt.]]**.',
+    'Der Staat gibt Steuergeld dazu: den **Bundeszuschuss**.',
+    'Am 1.7.2026 stiegen die Renten um 4,24 %. Ab Jahrgang 1964 gilt: Rente mit 67.'
+  ], merk:'Die Jungen zahlen für die Alten, später zahlt die nächste [[Generation|alle Menschen, die ungefähr gleich alt sind]] für sie: der Generationenvertrag. Er ist ein Versprechen, kein unterschriebener Vertrag.' },
+  qs:[
+  { id:'r3q1', type:'mc', q:'Wie hoch ist der Beitrag zur Rentenversicherung insgesamt?',
+    opts:['18,6 % vom Bruttolohn','9,3 % vom Bruttolohn','4,24 % vom Bruttolohn','18,6 % vom Nettolohn'], c:0,
+    hint:'Du zahlst die eine Hälfte, dein Betrieb die andere. Und es zählt der Lohn vor den Abzügen.',
+    exp:'Der Beitrag ist 18,6 % vom Bruttolohn. Davon zahlst du 9,3 % und dein Betrieb 9,3 %.' },
+  { id:'r3q2', type:'num', q:'Ein Azubi verdient 1.000 € brutto im Monat. Er zahlt 9,3 % in die Rentenversicherung. Wie viel Euro sind das?',
+    a:93, unit:'€',
+    hint:'1 % von 1.000 € sind 10 €.',
+    exp:'9,3 % von 1.000 € sind 93 €. Denn 1 % sind 10 €, und 9,3 × 10 € = 93 €.' },
+  { id:'r3q3', type:'num', q:'Bei 1.000 € brutto zahlen der Azubi und sein Betrieb je 9,3 %. Wie viel Euro fließen insgesamt in die Rentenkasse?',
+    a:186, unit:'€',
+    hint:'Zusammen sind es 18,6 % von 1.000 €.',
+    exp:'93 € vom Azubi + 93 € vom Betrieb = 186 €. Das sind 18,6 % von 1.000 €.' },
+  { id:'r3q4', type:'order', q:'Wie kommt dein Beitrag zu den Rentnern? Tippe die Schritte in der richtigen Reihenfolge an.',
+    steps:['Du arbeitest und bekommst Lohn.','9,3 % gehen als Beitrag an die Rentenversicherung (plus 9,3 % vom Betrieb).','Die Rentenversicherung zahlt das Geld sofort aus.','Heutige Rentner bekommen ihre Rente.'],
+    hint:'Am Anfang steht deine Arbeit, am Ende die Rente.',
+    exp:'Erst Lohn, dann Beitrag, dann zahlt die Rentenversicherung das Geld sofort aus. So bekommen die heutigen Rentner ihre Rente – das ist das Umlageverfahren.' },
+  { id:'r3q5', type:'tf', q:'Mein Rentenbeitrag wird auf einem Konto für mich gespart.', a:false,
+    hint:'Wohin geht das Geld direkt nach der Zahlung?',
+    exp:'Im Umlageverfahren wird dein Beitrag nicht gespart. Er wird sofort an die heutigen Rentner ausgezahlt.' },
+  { id:'r3q6', type:'match', q:'Was bedeuten die Begriffe? Tippe links und rechts die passenden Paare an.',
+    pairs:[['Umlageverfahren','Beiträge werden sofort an Rentner ausgezahlt.'],['Generationenvertrag','Die Jungen zahlen für die Alten.'],['Bruttolohn','Lohn vor allen Abzügen'],['Bundeszuschuss','Steuergeld vom Staat für die Rentenkasse']],
+    hint:'„Brutto“ heißt „vor Abzügen“. „Bund“ steht für den Staat.',
+    exp:'Umlageverfahren und Generationenvertrag beschreiben, wie das Geld fließt. Der Bundeszuschuss kommt zusätzlich aus Steuern.' },
+  { id:'r3q7', type:'tf', q:'Den Generationenvertrag hat jeder Beschäftigte unterschrieben.', a:false,
+    hint:'Ist das ein Blatt Papier – oder eher ein Versprechen?',
+    exp:'Der Generationenvertrag ist kein echter Vertrag zum Unterschreiben. Er ist ein Versprechen zwischen den Generationen.' },
+  { id:'r3q8', type:'mc', q:'Mit welchem Alter gibt es die Regelaltersrente für alle, die 1964 oder später geboren sind?',
+    opts:['Mit 67 Jahren','Mit 60 Jahren','Mit 74 Jahren'], c:0,
+    hint:'Die gesuchte Zahl liegt näher an 70 als an 60.',
+    exp:'Wer 1964 oder später geboren ist, bekommt die Regelaltersrente mit 67 Jahren. Das gilt auch für dich.' },
+  { id:'r3q9', type:'mc', q:'Wer gibt außer den Beschäftigten und Betrieben noch Geld in die Rentenkasse?',
+    opts:['Der Staat mit Steuergeld','Das Bundeskartellamt','Die Banken mit Zinsen','Die Rentner mit eigenen Beiträgen'], c:0,
+    hint:'Denk an den Begriff mit „Bund“ im Namen.',
+    exp:'Der Staat gibt Steuergeld dazu. Das nennt man Bundeszuschuss.' }
+  ]},
+{ id:'r4', short:'Demografischer Wandel', icon:'pyramid',
+  title:'Ist die Rente in Gefahr? Demografischer Wandel',
+  card:{ points:[
+    '**[[Demografischer Wandel|Die Bevölkerung verändert sich: Der Anteil der Älteren wächst.]]:** Es werden weniger Kinder geboren, und die Menschen leben länger. Die Gesellschaft wird älter.',
+    'Die **Babyboomer** (geburtenstarke Jahrgänge, ca. 1955–1969) gehen gerade in Rente.',
+    'Beitragszahler je Rentner: **1962: 6,0 · 1992: 2,7 · 2021: 2,1**',
+    'Lösungen und ihr Nachteil:\nlänger arbeiten – hart bei schweren Berufen\nhöhere Beiträge – weniger Netto, Arbeit wird teurer\nweniger Rente – [[Altersarmut|im Alter zu wenig Geld zum Leben haben]]\nmehr Steuergeld – fehlt z. B. für Schulen',
+    'Eine Rentenkommission hat im Sommer 2026 Vorschläge gemacht. **Beschlossen ist noch nichts.**'
+  ], merk:'Immer weniger Beitragszahler müssen die Renten für immer mehr Rentner bezahlen.',
+  src:'Zahlen: Bundesinstitut für Bevölkerungsforschung; 1962 nur früheres Bundesgebiet.' },
+  qs:[
+  { id:'r4q1', type:'gap', q:'Was ist der demografische Wandel? Ergänze die Sätze.',
+    text:'Es werden {0} Kinder geboren. Die Menschen leben {1}. Die Gesellschaft wird {2}.',
+    answers:['weniger','länger','älter'], distract:['mehr','kürzer','jünger'],
+    hint:'Denk an zwei Dinge: die Zahl der Geburten und wie alt die Menschen werden.',
+    exp:'Weniger Geburten und ein längeres Leben: So wird die Gesellschaft älter. Das ist der demografische Wandel.' },
+  { id:'r4q2', type:'mc', q:'Schätzfrage: Wie viele Beitragszahler kamen 2021 auf einen Rentner?',
+    opts:['2,1','1,2','4,5','6,0'], c:0, sortNum:true,
+    hint:'1962 waren es noch 6,0. Seitdem ist die Zahl stark gesunken – aber es sind noch mehr als zwei.',
+    exp:'2021 kamen 2,1 Beitragszahler auf einen Rentner. 1962 waren es noch 6,0 (nur früheres Bundesgebiet).' },
+  { id:'r4q3', type:'num', q:'1962 kamen 6,0 Beitragszahler auf einen Rentner, 1992 nur noch 2,7. Um wie viel ist die Zahl gesunken?',
+    a:3.3, unit:'',
+    hint:'Ziehe die kleinere Zahl von der größeren ab.',
+    exp:'6,0 − 2,7 = 3,3. Schon 1992 gab es also viel weniger Beitragszahler pro Rentner als 1962.' },
+  { id:'r4q4', type:'mc', q:'Wer sind die „Babyboomer“?',
+    opts:['Die geburtenstarken Jahrgänge, geboren ca. 1955–1969','Alle, die nach 2021 geboren sind','Menschen, die nie gearbeitet haben','Die Mitglieder der Rentenkommission'], c:0,
+    hint:'„Boom“ heißt hier: Es gab sehr viele Geburten.',
+    exp:'Babyboomer sind die geburtenstarken Jahrgänge von etwa 1955 bis 1969. Sie gehen gerade in Rente – deshalb gibt es immer mehr Rentner.' },
+  { id:'r4q5', type:'mc', q:'Warum wird die Rente immer schwerer zu bezahlen?',
+    opts:['Immer weniger Beitragszahler zahlen für immer mehr Rentner.','Das angesparte Rentengeld ist aufgebraucht.','Der Mindestlohn wurde abgeschafft.','Es werden immer mehr Kinder geboren.'], c:0,
+    hint:'Denk an das Verhältnis von Beitragszahlern zu Rentnern.',
+    exp:'Immer weniger Beitragszahler müssen die Renten für immer mehr Rentner bezahlen. Angespart wird nichts – es gilt das Umlageverfahren.' },
+  { id:'r4q6', type:'match', q:'Jede Lösung hat einen Haken. Tippe links die Lösung und rechts ihren wichtigsten Nachteil an.',
+    pairs:[['Länger arbeiten','hart für körperlich schwere Berufe'],['Höhere Beiträge','weniger Netto für Junge'],['Weniger Rente','Gefahr von Altersarmut'],['Mehr Steuergeld','Geld fehlt z. B. für Schulen']],
+    hint:'Überlege bei jeder Lösung: Wer hat darunter zu leiden?',
+    exp:'Jede Lösung hat einen Nachteil. Deshalb streitet die Politik darüber, was am fairsten ist.' },
+  { id:'r4q7', type:'tf', q:'Die Rentenkommission hat 2026 vorgeschlagen, das Rentenalter an die Lebenserwartung zu koppeln. Das ist schon beschlossen.', a:false,
+    hint:'Ein Vorschlag ist noch kein Gesetz.',
+    exp:'Die Kommission hat nur Vorschläge gemacht. Beschlossen ist noch nichts (Stand: 05.11.2026).' },
+  { id:'r4q8', type:'opinion', q:'Deine Meinung: Welche Lösung findest du am fairsten?',
+    opts:['Länger arbeiten','Höhere Beiträge','Weniger Rente','Mehr Steuergeld'],
+    info:'Es gibt keine perfekte Lösung – jede hat Vor- und Nachteile. Darüber streitet die Politik gerade.' }
+  ]},
+{ id:'r5', short:'Profi-Mix', icon:'trophy',
+  title:'Profi-Mix', card:null,
+  qs:[
+  { id:'r5q1', type:'mc', q:'Warum gehört die Rentenversicherung zum „Sozialen“ in der Sozialen Marktwirtschaft?',
+    opts:['Sie sichert Menschen im Alter ab – das ist sozialer Ausgleich.','Sie sorgt für freie Preise auf dem Markt.','Sie schützt den Wettbewerb zwischen Firmen.','Sie ist eine freiwillige Sparanlage bei einer Bank.'], c:0,
+    hint:'„Sozial“ heißt: Der Staat sorgt dafür, dass Menschen abgesichert sind.',
+    exp:'Die Rentenversicherung sichert Menschen im Alter ab. Sie ist Pflicht und eine der fünf Sozialversicherungen – ein Teil des sozialen Ausgleichs.' },
+  { id:'r5q2', type:'mc', q:'Was hat die Rente mit dem Mindestlohn zu tun?',
+    opts:['Wer mehr verdient, zahlt mehr Beitrag und bekommt später mehr Rente.','Wer Mindestlohn bekommt, zahlt keine Rentenbeiträge.','Der Mindestlohn wird aus der Rentenkasse bezahlt.','Nichts – Lohn und Rente hängen nicht zusammen.'], c:0,
+    hint:'Der Beitrag ist ein fester Prozentsatz vom Bruttolohn.',
+    exp:'Der Beitrag ist 18,6 % vom Bruttolohn. Wer mehr verdient, zahlt mehr ein und bekommt später mehr Rente. Ein höherer Mindestlohn hilft also auch der Rente.' },
+  { id:'r5q3', type:'tf', q:'In der Freien Marktwirtschaft gäbe es keinen Mindestlohn.', a:true,
+    hint:'Wie stark greift der Staat in der Freien Marktwirtschaft ein?',
+    exp:'In der Freien Marktwirtschaft greift der Staat nicht ein. Den Lohn bestimmen dann nur Angebot und Nachfrage.' },
+  { id:'r5q4', type:'case', scene:'Herr Kaya ist 74 Jahre alt und Rentner. Seine Rente stieg 2026 um 4,24 %.',
+    q:'Wer bezahlt seine Rente hauptsächlich?', opts:['Die heutigen Beschäftigten über ihre Beiträge, dazu der Bundeszuschuss','Herr Kaya selbst, mit dem Geld, das für ihn angespart wurde','Nur der Staat aus Steuergeld','Das Bundeskartellamt'], c:0,
+    hint:'Denk an den Generationenvertrag.',
+    exp:'Im Umlageverfahren zahlen die heutigen Beschäftigten und Betriebe die Renten. Der Staat gibt den Bundeszuschuss dazu. Für Herrn Kaya wurde nichts angespart.' },
+  { id:'r5q5', type:'mc', q:'Herr Demir hat kein Kind und bekommt Arbeitslosengeld I. Wie hoch ist es etwa?',
+    opts:['Etwa 60 % seines letzten Nettolohns','Etwa 67 % seines letzten Nettolohns','18,6 % seines Bruttolohns','Sein voller letzter Bruttolohn'], c:0,
+    hint:'Mit Kind gibt es etwas mehr als ohne Kind.',
+    exp:'Ohne Kind sind es etwa 60 % des letzten Nettolohns, mit Kind 67 %. Das Geld kommt aus der Arbeitslosenversicherung.' },
+  { id:'r5q6', type:'cat', q:'**Markt oder Staat?** Freiheit des Marktes – oder Schutz durch den Staat?',
+    cats:['Markt','Staat'],
+    items:[['Kündigungsschutz',1],['Gewerbefreiheit',0],['Rentenversicherung',1],['Freie Berufswahl',0],['Lebensmittelkontrollen',1],['Bezahlter Urlaub',1]],
+    hint:'Frag dich: Ist das eine Freiheit für Firmen und Menschen – oder eine Regel, die schützt?',
+    exp:'Gewerbefreiheit und freie Berufswahl sind Freiheiten des Marktes. Kündigungsschutz, bezahlter Urlaub, Lebensmittelkontrollen und Rentenversicherung sind Schutz durch den Staat.' },
+  { id:'r5q7', type:'gap', q:'Profi-Lückentext: Verbinde, was du gelernt hast.',
+    text:'Die {0} gehört zum sozialen Teil der Sozialen Marktwirtschaft. Sie arbeitet im {1}: Die Beiträge gehen sofort an die Rentner. Wegen des {2} gibt es immer weniger Beitragszahler pro Rentner.',
+    answers:['Rentenversicherung','Umlageverfahren','demografischen Wandels'], distract:['Autoversicherung','Sparverfahren','Mindestlohns'],
+    hint:'Es geht um die Rente: wer sie organisiert, wie das Geld fließt und warum es knapp wird.',
+    exp:'Die Rentenversicherung arbeitet im Umlageverfahren. Der demografische Wandel bringt immer weniger Beitragszahler pro Rentner.' }
+  ]}
+];
+
+var SUMMARY = [
+  'So viel Markt wie möglich, so viel Staat wie nötig.',
+  'Der Markt sorgt für Wohlstand, der Staat für sozialen Ausgleich.',
+  'Der Staat schützt Arbeitnehmer, Verbraucher und Menschen in Not – z. B. mit Mindestlohn (13,90 €), Grundsicherungsgeld und fünf Sozialversicherungen.',
+  'Der Rentenbeitrag ist 18,6 % vom Bruttolohn: 9,3 % zahlst du, 9,3 % dein Betrieb.',
+  'Generationenvertrag: Die Jungen zahlen für die Alten. Das Geld wird nicht gespart, sondern sofort ausgezahlt (Umlageverfahren).',
+  'Immer weniger Beitragszahler müssen die Renten für immer mehr Rentner bezahlen.'
+];
+
+var TYPE_LABEL = {mc:'Multiple Choice', tf:'Richtig oder falsch?', cat:'Markt oder Staat?', match:'Zuordnen', gap:'Lückentext', order:'Reihenfolge', num:'Rechenaufgabe', 'case':'Fallentscheidung', opinion:'Deine Meinung'};
+
+/* ---------- Grundgerüst ---------- */
+var ALLQ = {};
+ROUNDS.forEach(function(r, ri){ r.qs.forEach(function(q){ q.round = ri; ALLQ[q.id] = q; }); });
+var SCORED = Object.keys(ALLQ).filter(function(id){ return ALLQ[id].type !== 'opinion'; });
+var MAX = SCORED.length * 2;
+var KEY = 'quiz-smw-rente-v1';
+var S = null;
+var playerName = '';
+var app = document.getElementById('app');
+var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+window.QUIZ_DATA = { rounds: ROUNDS, max: MAX, scored: SCORED.length };
+window.QUIZ_STATE = function(){ return S ? JSON.parse(JSON.stringify(S)) : null; };
+
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function fmt(s){
+  return String(s)
+    .replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, function(m, a, b){ return '<button type="button" class="term" data-def="' + esc(b) + '">' + a + '</button>'; })
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+}
+function plain(s){ return String(s).replace(/\[\[([^|\]]+)\|[^\]]+\]\]/g, '$1').replace(/\*\*(.+?)\*\*/g, '$1'); }
+function num(n){ return String(Math.round(n * 10) / 10).replace('.', ','); }
+function pts(n){ return num(n) + (n === 1 ? ' Punkt' : ' Punkte'); }
+function range(n){ var a = []; for (var i = 0; i < n; i++) a.push(i); return a; }
+function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function shuffleDiff(a){ if (a.length < 2) return a.slice(); var s; var n = 0; do { s = shuffle(a); n++; } while (s.join() === a.join() && n < 30); return s; }
+function derange(n){ var l = shuffle(range(n)), r, tries = 0; do { r = shuffle(range(n)); tries++; } while (r.some(function(v, i){ return v === l[i]; }) && tries < 200); return {l:l, r:r}; }
+function permFor(q){
+  switch (q.type){
+    case 'mc': case 'case': case 'opinion':
+      return {o: q.sortNum ? range(q.opts.length).sort(function(a, b){ return parseFloat(q.opts[a].replace(',', '.')) - parseFloat(q.opts[b].replace(',', '.')); }) : shuffle(range(q.opts.length))};
+    case 'cat': return {o: shuffle(range(q.items.length))};
+    case 'match': return derange(q.pairs.length);
+    case 'gap': return {o: shuffle(range(q.answers.length + q.distract.length))};
+    case 'order': return {o: shuffleDiff(range(q.steps.length))};
+    default: return {};
+  }
+}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+function load(){ try { var s = localStorage.getItem(KEY); if (!s) return null; var o = JSON.parse(s); if (o && o.v === 1 && o.perms) return o; } catch (e) {} return null; }
+function clearSave(){ try { localStorage.removeItem(KEY); } catch (e) {} }
+
+function newGame(){
+  S = {v:1, phase:'card', r:0, qi:0, perms:{}, res:{}, base:0, bonus:0, retryPts:0, streak:0, best:0, wrong:[], rq:[], ri:0, answered:false, tip:false, retries:0, started:Date.now()};
+  Object.keys(ALLQ).forEach(function(id){ S.perms[id] = permFor(ALLQ[id]); });
+}
+function total(){ return S ? S.base + S.bonus + S.retryPts : 0; }
+function percent(){ return Math.min(100, Math.round((S.base + S.retryPts) / MAX * 100)); }
+
+/* ---------- Kopfzeile ---------- */
+function updateHeader(){
+  document.getElementById('score').textContent = pts(S ? total() : 0);
+  var prog = document.getElementById('prog');
+  var inGame = S && (S.phase === 'card' || S.phase === 'q' || S.phase === 'intro5');
+  var inRetry = S && S.phase === 'retry';
+  prog.hidden = !(inGame || inRetry);
+  if (prog.hidden) return;
+  var segs = document.getElementById('segs');
+  var t = document.getElementById('progText');
+  if (inRetry){
+    var done = S.ri + (S.answered ? 1 : 0);
+    t.innerHTML = '<b>Nochmal-Runde</b> · Frage ' + Math.min(S.ri + 1, S.rq.length) + '/' + S.rq.length;
+    segs.innerHTML = '<div class="seg" id="seg0"><i style="width:' + (done / S.rq.length * 100) + '%"></i></div>';
+  } else {
+    var r = ROUNDS[S.r];
+    var label = S.phase === 'q' ? 'Frage ' + (S.qi + 1) + '/' + r.qs.length : (S.phase === 'card' ? 'Erinnerungskarte' : 'Start');
+    t.innerHTML = '<b>Runde ' + (S.r + 1) + '/5</b> · ' + label;
+    segs.innerHTML = ROUNDS.map(function(rr, i){
+      var f = i < S.r ? 1 : (i === S.r && S.phase === 'q' ? (S.qi + (S.answered ? 1 : 0)) / rr.qs.length : 0);
+      return '<div class="seg" id="seg' + i + '" data-fill="' + f.toFixed(3) + '"><i style="width:' + (f * 100) + '%"></i></div>';
+    }).join('');
+  }
+  renderStreak(false);
+}
+function renderStreak(popIt){
+  var el = document.getElementById('streak');
+  if (S && S.phase !== 'retry' && S.streak >= 3){
+    el.innerHTML = '<span class="streak' + (popIt ? ' pop' : '') + '" id="streakBadge">' + I.bolt + S.streak + 'er-Serie</span>';
+  } else el.innerHTML = '';
+}
+
+/* ---------- Glossar-Popup ---------- */
+var pop = document.getElementById('pop');
+document.addEventListener('click', function(e){
+  var t = e.target.closest && e.target.closest('.term');
+  if (t){
+    e.preventDefault();
+    pop.innerHTML = '<b>' + esc(t.textContent) + '</b>' + esc(t.getAttribute('data-def'));
+    pop.hidden = false;
+    var r = t.getBoundingClientRect();
+    var w = Math.min(320, document.documentElement.clientWidth - 24);
+    pop.style.maxWidth = w + 'px';
+    var left = Math.max(12, Math.min(r.left + window.scrollX, window.scrollX + document.documentElement.clientWidth - w - 12));
+    pop.style.left = left + 'px';
+    pop.style.top = (r.bottom + window.scrollY + 8) + 'px';
+    return;
+  }
+  if (!pop.hidden) pop.hidden = true;
+}, true);
+window.addEventListener('scroll', function(){ pop.hidden = true; }, {passive:true});
+
+/* ---------- Modal (Spickzettel) ---------- */
+function cardHTML(r, ri){
+  var c = r.card;
+  return '<article class="icard">' +
+    '<div class="icard-head"><div class="icard-ico">' + ICON[r.icon] + '</div><div><p class="kicker">Runde ' + (ri + 1) + ' · Erinnerungskarte</p><h2>' + esc(r.title) + '</h2></div></div>' +
+    '<div class="icard-body"><ul>' + c.points.map(function(p){ return '<li>' + fmt(p) + '</li>'; }).join('') + '</ul>' +
+    '<div class="merk"><span class="mk">Merksatz</span><strong>' + fmt(c.merk) + '</strong></div>' +
+    (c.src ? '<p class="src">' + esc(c.src) + '</p>' : '') + '</div></article>';
+}
+function openSpick(defaultRound){
+  var root = document.getElementById('modalRoot');
+  var multi = defaultRound === null || ROUNDS[defaultRound].card === null || S.phase === 'retry';
+  var cur = (defaultRound !== null && ROUNDS[defaultRound].card) ? defaultRound : 0;
+  function draw(){
+    root.innerHTML = '<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Spickzettel"><div class="modal-in">' +
+      '<div class="modal-bar"><h3>Spickzettel</h3><button class="btn ghost" id="closeModal" type="button">Schließen</button></div>' +
+      (multi ? '<div class="tabs" role="tablist">' + [0, 1, 2, 3].map(function(i){ return '<button class="tab" role="tab" type="button" data-tab="' + i + '" aria-selected="' + (i === cur) + '">Runde ' + (i + 1) + '</button>'; }).join('') + '</div>' : '') +
+      cardHTML(ROUNDS[cur], cur) + '</div></div>';
+    document.getElementById('closeModal').focus();
+  }
+  draw();
+  root.onclick = function(e){
+    if (e.target.id === 'modal' || e.target.id === 'closeModal'){ root.innerHTML = ''; root.onclick = null; return; }
+    var tab = e.target.closest('[data-tab]');
+    if (tab){ cur = +tab.getAttribute('data-tab'); draw(); }
+  };
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape'){ var root = document.getElementById('modalRoot'); if (root.innerHTML){ root.innerHTML = ''; root.onclick = null; } pop.hidden = true; }
+});
+
+/* ---------- Bildschirme ---------- */
+function show(html){
+  pop.hidden = true;
+  app.innerHTML = '<div class="screen">' + html + '</div>';
+  updateHeader();
+  window.scrollTo(0, 0);
+}
+
+function renderStart(){
+  var saved = load();
+  var canResume = saved && saved.phase !== 'start';
+  show(
+    '<section class="panel">' +
+    '<div class="hero"><div class="hero-ico">' + ICON.scale + '</div><div><p class="kicker">Lernquiz · Wirtschaft-Politik</p><h1>Soziale Marktwirtschaft &amp; Rente</h1></div></div>' +
+    '<p class="sub">Wer schützt dich – und wer zahlt deine Rente?</p>' +
+    '<div class="info"><span class="chip">ca. 20 Minuten</span><span class="chip">5 Runden</span><span class="chip">Tipps kosten 1 Punkt, der Spickzettel ist kostenlos</span></div>' +
+    '<ol class="rounds">' + ROUNDS.map(function(r, i){ return '<li><span class="ri">' + ICON[r.icon] + '</span><span><span class="rn">Runde ' + (i + 1) + '</span>' + esc(r.short) + '</span></li>'; }).join('') + '</ol>' +
+    '<label class="lbl" for="name">Dein Vorname (freiwillig)</label>' +
+    '<input class="field" id="name" type="text" autocomplete="off" autocapitalize="words" spellcheck="false" maxlength="30" placeholder="z. B. Lena" value="' + esc(playerName) + '">' +
+    '<p class="note">Dein Name erscheint nur auf dem Ergebnis. Er wird nicht gespeichert und nicht verschickt.</p>' +
+    '<div class="actions">' +
+      (canResume ? '<button class="btn primary" id="resume" type="button">' + I.arrow + 'Weiterspielen</button><button class="btn ghost" id="start" type="button">Neu beginnen</button>'
+                 : '<button class="btn primary" id="start" type="button">' + I.arrow + 'Quiz starten</button>') +
+    '</div></section>'
+  );
+  var nameEl = document.getElementById('name');
+  nameEl.addEventListener('input', function(){ playerName = nameEl.value.trim(); });
+  document.getElementById('start').onclick = function(){ playerName = nameEl.value.trim(); newGame(); save(); route(); };
+  if (canResume) document.getElementById('resume').onclick = function(){
+    playerName = nameEl.value.trim(); S = saved;
+    if ((S.phase === 'q' || S.phase === 'retry') && S.answered){ next(); return; }
+    route();
+  };
+}
+
+function renderCard(){
+  var r = ROUNDS[S.r];
+  show(cardHTML(r, S.r) + '<div class="actions"><button class="btn primary full" id="go" type="button">Verstanden – los geht’s' + I.arrow + '</button></div>');
+  document.getElementById('go').onclick = function(){ S.phase = 'q'; S.qi = 0; S.answered = false; S.tip = false; save(); route(); };
+}
+
+function renderIntro5(){
+  show('<section class="panel center"><div class="bigico">' + ICON.trophy + '</div><p class="kicker">Runde 5</p><h2>Profi-Mix</h2>' +
+    '<p>Jetzt kommt alles aus den Runden 1 bis 4 zusammen. Die Aufgaben sind etwas kniffliger.</p>' +
+    '<p>Der Spickzettel zeigt dir hier alle vier Erinnerungskarten.</p>' +
+    '<div class="actions"><button class="btn primary full" id="go" type="button">Los geht’s' + I.arrow + '</button></div></section>');
+  document.getElementById('go').onclick = function(){ S.phase = 'q'; S.qi = 0; S.answered = false; S.tip = false; save(); route(); };
+}
+
+function renderRetryIntro(){
+  var n = S.wrong.length;
+  show('<section class="panel center"><div class="bigico">' + ICON.repeat + '</div><p class="kicker">Fehler-Training</p><h2>Nochmal-Runde</h2>' +
+    '<p>' + (n === 1 ? 'Eine Aufgabe hattest' : n + ' Aufgaben hattest') + ' du noch nicht richtig. Jetzt kommen sie zurück – in neuer Reihenfolge und mit gemischten Antworten.</p>' +
+    '<p>Für jede richtige Antwort gibt es die <strong>halben Punkte</strong>.</p>' +
+    '<div class="actions"><button class="btn primary" id="go" type="button">' + I.repeat2() + 'Nochmal-Runde starten</button><button class="btn ghost" id="skip" type="button">Direkt zum Ergebnis</button></div></section>');
+  document.getElementById('go').onclick = startRetry;
+  document.getElementById('skip').onclick = function(){ S.phase = 'result'; save(); route(); };
+}
+I.repeat2 = function(){ return '<svg ' + SI + '><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg>'; };
+
+function startRetry(){
+  S.rq = shuffle(S.wrong);
+  S.rq.forEach(function(id){ S.perms[id] = permFor(ALLQ[id]); });
+  S.ri = 0; S.phase = 'retry'; S.answered = false; S.tip = false; S.retries++;
+  save(); route();
+}
+
+function rankFor(p){
+  if (p >= 80) return 'Profi für Soziale Marktwirtschaft & Rente';
+  if (p >= 50) return 'Kenner/-in';
+  return 'Einsteiger/-in';
+}
+function renderResult(){
+  var p = percent();
+  var firstOk = SCORED.filter(function(id){ return S.res[id] && S.res[id].ok; }).length;
+  var circ = 2 * Math.PI * 64;
+  var d = new Date();
+  var stamp = d.toLocaleDateString('de-DE', {day:'2-digit', month:'2-digit', year:'numeric'}) + ', ' + d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}) + ' Uhr';
+  var bars = ROUNDS.map(function(r, i){
+    var ids = r.qs.filter(function(q){ return q.type !== 'opinion'; }).map(function(q){ return q.id; });
+    var ok = ids.filter(function(id){ return S.res[id] && S.res[id].ok; }).length;
+    return '<div class="rbar"><span>Runde ' + (i + 1) + ': ' + esc(r.short) + '</span><span class="rv">' + ok + '/' + ids.length + '</span><div class="bar"><i style="width:' + (ok / ids.length * 100) + '%"></i></div></div>';
+  }).join('');
+  show(
+    '<div class="teacher">' + I.eye + 'Zeig diesen Bildschirm deiner Lehrkraft.</div>' +
+    '<section class="panel">' +
+    '<div class="res-top"><div class="ring" aria-label="' + p + ' Prozent"><svg viewBox="0 0 150 150"><circle cx="75" cy="75" r="64" fill="none" stroke="var(--mist)" stroke-width="14"/><circle cx="75" cy="75" r="64" fill="none" stroke="var(--accent)" stroke-width="14" stroke-linecap="round" stroke-dasharray="' + circ.toFixed(1) + '" stroke-dashoffset="' + (circ * (1 - p / 100)).toFixed(1) + '"/></svg><div class="pc" id="pct">' + p + ' %</div></div>' +
+    '<div><p class="who">' + (playerName ? 'Ergebnis von <strong>' + esc(playerName) + '</strong> · ' : '') + stamp + '</p>' +
+    '<p class="big" id="total">' + pts(total()) + '</p>' +
+    '<div class="rank" id="rank">' + I.star + esc(rankFor(p)) + '</div></div></div>' +
+    '<div class="stats">' +
+      '<div class="stat"><b id="firstOk">' + firstOk + ' / ' + SCORED.length + '</b><span>im ersten Durchgang richtig</span></div>' +
+      '<div class="stat"><b>' + num(S.bonus) + '</b><span>Serien-Bonuspunkte</span></div>' +
+      '<div class="stat"><b>' + num(S.retryPts) + '</b><span>Punkte aus der Nochmal-Runde</span></div>' +
+      '<div class="stat"><b>' + S.best + '</b><span>längste Serie</span></div>' +
+    '</div>' +
+    '<div class="rbars">' + bars + '</div>' +
+    '<h2>Das solltest du dir merken</h2><ol class="merks">' + SUMMARY.map(function(m){ return '<li>' + esc(m) + '</li>'; }).join('') + '</ol>' +
+    '<div class="actions">' +
+      (S.wrong.length ? '<button class="btn primary" id="retry" type="button">' + I.repeat2() + 'Fehler nochmal üben (' + S.wrong.length + ')</button>' : '') +
+      '<button class="btn ' + (S.wrong.length ? 'ghost' : 'primary') + '" id="restart" type="button">Neu starten</button>' +
+    '</div></section>'
+  );
+  if (S.wrong.length) document.getElementById('retry').onclick = startRetry;
+  document.getElementById('restart').onclick = function(){ clearSave(); S = null; renderStart(); updateHeader(); };
+}
+
+/* ---------- Frage-Rahmen ---------- */
+function currentQ(){ return S.phase === 'retry' ? ALLQ[S.rq[S.ri]] : ROUNDS[S.r].qs[S.qi]; }
+
+function renderQuestion(){
+  var q = currentQ();
+  var perm = S.perms[q.id];
+  var retry = S.phase === 'retry';
+  var tipCost = retry ? '−0,5' : '−1';
+  var head = '<div class="qhead"><span class="qtype">' + TYPE_LABEL[q.type] + (retry ? ' · aus Runde ' + (q.round + 1) : '') + '</span><div class="tools">' +
+    '<button class="tool" id="spick" type="button">' + I.card + 'Spickzettel</button>' +
+    (q.type !== 'opinion' ? '<button class="tool' + (S.tip ? ' used' : '') + '" id="tipBtn" type="button"' + (S.tip ? ' disabled' : '') + '>' + I.bulb + 'Tipp (' + tipCost + ' Punkt)</button>' : '') +
+    '</div></div>';
+  var hint = q.hint ? '<div class="hint" id="hint"' + (S.tip ? '' : ' hidden') + '>' + I.bulb + '<span>' + fmt(q.hint) + '</span></div>' : '';
+  var body = '';
+  if (q.type === 'case') body += '<div class="case">' + ICON.person + '<div><b>Fall</b>' + fmt(q.scene) + '</div></div>';
+  if (q.type === 'tf') body += '<p class="qtext">Richtig oder falsch?</p><div class="statement">' + fmt(q.q) + '</div>';
+  else body += '<p class="qtext">' + fmt(q.q) + '</p>';
+  body += '<div id="area"></div><div id="fbox"></div>';
+  show('<section class="panel" data-qid="' + q.id + '" data-type="' + q.type + '">' + head + hint + body + '</section>');
+
+  document.getElementById('spick').onclick = function(){ openSpick(retry ? q.round : (ROUNDS[S.r].card ? S.r : null)); };
+  var tb = document.getElementById('tipBtn');
+  if (tb) tb.onclick = function(){
+    if (S.answered || S.tip) return;
+    S.tip = true; save();
+    tb.disabled = true; tb.classList.add('used');
+    document.getElementById('hint').hidden = false;
+  };
+  var area = document.getElementById('area');
+  RENDER[q.type](q, perm, area);
+}
+
+function lockTools(){ var tb = document.getElementById('tipBtn'); if (tb) tb.disabled = true; }
+
+function finish(q, ok, detail){
+  if (S.answered) return;
+  S.answered = true;
+  lockTools();
+  var retry = S.phase === 'retry';
+  var gained = 0, streakHit = 0;
+  if (ok){
+    gained = retry ? (S.tip ? 0.5 : 1) : (S.tip ? 1 : 2);
+    if (retry){ S.retryPts += gained; S.wrong = S.wrong.filter(function(id){ return id !== q.id; }); }
+    else {
+      S.base += gained; S.streak++;
+      if (S.streak > S.best) S.best = S.streak;
+      if (S.streak % 3 === 0){ S.bonus += 1; streakHit = S.streak; }
+    }
+  } else if (!retry){
+    S.streak = 0;
+    if (S.wrong.indexOf(q.id) < 0) S.wrong.push(q.id);
+  }
+  if (!retry) S.res[q.id] = {ok:ok, tip:S.tip};
+  save();
+  updateHeader();
+  if (streakHit) renderStreak(true);
+  var h = '<div class="fb ' + (ok ? 'ok' : 'bad') + '" id="feedback" data-ok="' + ok + '" role="status">' +
+    '<div class="fb-h">' + (ok ? I.ok + 'Richtig! +' + pts(gained) + (S.tip ? ' (mit Tipp)' : '') : I.bad + 'Leider falsch.') + '</div>' +
+    (streakHit ? '<p><span class="bonus">' + I.bolt + streakHit + 'er-Serie! +1 Bonuspunkt</span></p>' : '') +
+    (!ok && detail ? '<p class="sol">' + detail + '</p>' : '') +
+    (ok && detail ? '<p>' + detail + '</p>' : '') +
+    '<p>' + fmt(q.exp) + '</p>' +
+    (!ok ? '<p class="again">' + (retry ? 'Diese Aufgabe bleibt in deiner Fehlerliste.' : 'Diese Aufgabe kommt am Ende in der Nochmal-Runde zurück.') + '</p>' : '') +
+    '<button class="btn primary full" id="next" type="button">Weiter' + I.arrow + '</button></div>';
+  showFeedback(h);
+}
+function showFeedback(h){
+  var fbox = document.getElementById('fbox');
+  fbox.innerHTML = h;
+  document.getElementById('next').onclick = next;
+  var fb = fbox.firstChild;
+  setTimeout(function(){ try { fb.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'nearest'}); } catch (e) { fb.scrollIntoView(false); } }, 30);
+}
+
+function next(){
+  if (S.phase === 'retry'){
+    S.ri++;
+    if (S.ri >= S.rq.length){ S.phase = 'result'; }
+  } else {
+    S.qi++;
+    if (S.qi >= ROUNDS[S.r].qs.length){
+      if (S.r < ROUNDS.length - 1){ S.r++; S.qi = 0; S.phase = ROUNDS[S.r].card ? 'card' : 'intro5'; }
+      else { S.phase = S.wrong.length ? 'retryintro' : 'result'; }
+    }
+  }
+  S.answered = false; S.tip = false;
+  save(); route();
+}
+
+function route(){
+  if (!S){ renderStart(); return; }
+  switch (S.phase){
+    case 'card': renderCard(); break;
+    case 'intro5': renderIntro5(); break;
+    case 'q': case 'retry': renderQuestion(); break;
+    case 'retryintro': renderRetryIntro(); break;
+    case 'result': renderResult(); break;
+    default: renderStart();
+  }
+}
+
+/* ---------- Aufgabentypen ---------- */
+var LET = 'ABCD';
+var RENDER = {};
+RENDER.mc = function(q, perm, area){
+  area.innerHTML = '<div class="opts">' + perm.o.map(function(oi, k){
+    return '<button class="opt" type="button" data-i="' + oi + '"><span class="lt">' + LET[k] + '</span><span>' + esc(q.opts[oi]) + '</span></button>';
+  }).join('') + '</div>';
+  area.querySelectorAll('.opt').forEach(function(b){
+    b.onclick = function(){
+      if (S.answered) return;
+      var i = +b.getAttribute('data-i'), ok = i === q.c;
+      area.querySelectorAll('.opt').forEach(function(x){
+        x.disabled = true;
+        var xi = +x.getAttribute('data-i');
+        if (xi === q.c) x.classList.add('ok'); else if (x === b) x.classList.add('bad'); else x.classList.add('dim');
+      });
+      finish(q, ok, ok ? '' : 'Richtig ist: ' + esc(q.opts[q.c]));
+    };
+  });
+};
+RENDER['case'] = RENDER.mc;
+RENDER.tf = function(q, perm, area){
+  area.innerHTML = '<div class="tf"><button class="opt" type="button" data-v="1">Richtig</button><button class="opt" type="button" data-v="0">Falsch</button></div>';
+  area.querySelectorAll('.opt').forEach(function(b){
+    b.onclick = function(){
+      if (S.answered) return;
+      var v = b.getAttribute('data-v') === '1', ok = v === q.a;
+      area.querySelectorAll('.opt').forEach(function(x){
+        x.disabled = true;
+        var xv = x.getAttribute('data-v') === '1';
+        if (xv === q.a) x.classList.add('ok'); else x.classList.add('bad');
+      });
+      finish(q, ok, ok ? '' : 'Die Aussage ist ' + (q.a ? 'richtig' : 'falsch') + '.');
+    };
+  });
+};
+RENDER.cat = function(q, perm, area){
+  var k = 0, right = 0;
+  area.innerHTML = '<div class="cat-now" id="catNow"></div>' +
+    '<div class="cat-btns" id="catBtns">' + q.cats.map(function(c, i){ return '<button class="opt" type="button" data-cat="' + i + '">' + esc(c) + '</button>'; }).join('') + '</div>' +
+    '<div class="bins">' + q.cats.map(function(c, i){ return '<div class="bin"><h4>' + esc(c) + '</h4><ul id="bin' + i + '"></ul></div>'; }).join('') + '</div>';
+  var now = document.getElementById('catNow');
+  function drawNow(){
+    if (k < perm.o.length){
+      var it = q.items[perm.o[k]];
+      now.innerHTML = '<small>Begriff ' + (k + 1) + ' von ' + perm.o.length + '</small><span class="cat-item" id="catItem" data-item="' + perm.o[k] + '">' + esc(it[0]) + '</span>';
+    }
+  }
+  drawNow();
+  area.querySelectorAll('[data-cat]').forEach(function(b){
+    b.onclick = function(){
+      if (S.answered || k >= perm.o.length) return;
+      var chosen = +b.getAttribute('data-cat');
+      var it = q.items[perm.o[k]];
+      var ok = chosen === it[1];
+      if (ok) right++;
+      var li = document.createElement('li');
+      li.textContent = it[0];
+      if (!ok){ li.className = 'bad'; var sm = document.createElement('small'); sm.textContent = 'Du hattest: ' + q.cats[chosen]; li.appendChild(sm); }
+      document.getElementById('bin' + it[1]).appendChild(li);
+      k++;
+      if (k >= perm.o.length){
+        now.innerHTML = '';
+        document.getElementById('catBtns').hidden = true;
+        var all = right === perm.o.length;
+        finish(q, all, right + ' von ' + perm.o.length + ' Begriffen richtig einsortiert.' + (all ? '' : ' Die roten Begriffe stehen jetzt in der richtigen Spalte.'));
+      } else drawNow();
+    };
+  });
+};
+RENDER.match = function(q, perm, area){
+  var selL = null, selR = null, mistakes = 0, done = 0, busy = false;
+  area.innerHTML = '<div class="match"><div class="mcol"><h4>Begriff</h4>' +
+    perm.l.map(function(i){ return '<button class="mi left" type="button" data-l="' + i + '">' + esc(q.pairs[i][0]) + '</button>'; }).join('') +
+    '</div><div class="mcol"><h4>Erklärung</h4>' +
+    perm.r.map(function(i){ return '<button class="mi right" type="button" data-r="' + i + '">' + esc(q.pairs[i][1]) + '</button>'; }).join('') +
+    '</div></div><p class="mstat" id="mstat">0 von ' + q.pairs.length + ' Paaren gefunden</p>';
+  var L = function(i){ return area.querySelector('[data-l="' + i + '"]'); };
+  var R = function(i){ return area.querySelector('[data-r="' + i + '"]'); };
+  function check(){
+    if (selL === null || selR === null) return;
+    var a = L(selL), b = R(selR);
+    if (selL === selR){
+      done++;
+      [a, b].forEach(function(x){ x.classList.remove('sel'); x.classList.add('done'); x.disabled = true; x.insertAdjacentHTML('beforeend', '<span class="pn">' + done + '</span>'); });
+      selL = selR = null;
+      document.getElementById('mstat').textContent = done + ' von ' + q.pairs.length + ' Paaren gefunden' + (mistakes ? ' · ' + mistakes + ' Fehlversuch' + (mistakes > 1 ? 'e' : '') : '');
+      if (done === q.pairs.length){
+        finish(q, mistakes === 0, mistakes === 0 ? 'Alle Paare beim ersten Versuch richtig.' : 'Du hattest ' + mistakes + ' Fehlversuch' + (mistakes > 1 ? 'e' : '') + '. Die richtigen Paare sind jetzt grün markiert.');
+      }
+    } else {
+      mistakes++; busy = true;
+      [a, b].forEach(function(x){ x.classList.remove('sel'); x.classList.add('wrong'); });
+      document.getElementById('mstat').textContent = done + ' von ' + q.pairs.length + ' Paaren gefunden · ' + mistakes + ' Fehlversuch' + (mistakes > 1 ? 'e' : '');
+      setTimeout(function(){ a.classList.remove('wrong'); b.classList.remove('wrong'); busy = false; }, 650);
+      selL = selR = null;
+    }
+  }
+  area.querySelectorAll('.mi').forEach(function(btn){
+    btn.onclick = function(){
+      if (S.answered || busy || btn.classList.contains('done')) return;
+      if (btn.hasAttribute('data-l')){
+        var i = +btn.getAttribute('data-l');
+        if (selL !== null) L(selL).classList.remove('sel');
+        selL = (selL === i) ? null : i;
+        if (selL !== null) btn.classList.add('sel');
+      } else {
+        var j = +btn.getAttribute('data-r');
+        if (selR !== null) R(selR).classList.remove('sel');
+        selR = (selR === j) ? null : j;
+        if (selR !== null) btn.classList.add('sel');
+      }
+      check();
+    };
+  });
+};
+RENDER.gap = function(q, perm, area){
+  var words = q.answers.concat(q.distract);
+  var n = q.answers.length;
+  var fills = []; for (var i = 0; i < n; i++) fills.push(null);
+  var active = 0;
+  var txt = esc(q.text).replace(/\{(\d)\}/g, function(m, d){ return '<button class="slot" type="button" data-s="' + d + '" aria-label="Lücke ' + (+d + 1) + '">&nbsp;</button>'; });
+  area.innerHTML = '<div class="gaptext">' + txt + '</div><p class="bank-l">Tippe ein Wort an. Tippe eine gefüllte Lücke an, um sie wieder zu leeren.</p>' +
+    '<div class="bank">' + perm.o.map(function(w){ return '<button class="word" type="button" data-w="' + w + '">' + esc(words[w]) + '</button>'; }).join('') + '</div>' +
+    '<div class="row-btns"><button class="btn primary" id="check" type="button" disabled>Prüfen</button></div>';
+  var check = document.getElementById('check');
+  function draw(){
+    area.querySelectorAll('.slot').forEach(function(s){
+      var k = +s.getAttribute('data-s');
+      s.innerHTML = fills[k] === null ? '&nbsp;' : esc(words[fills[k]]);
+      s.classList.toggle('filled', fills[k] !== null);
+      s.classList.toggle('active', k === active && !S.answered);
+    });
+    area.querySelectorAll('.word').forEach(function(w){ w.disabled = S.answered || fills.indexOf(+w.getAttribute('data-w')) >= 0; });
+    check.disabled = S.answered || fills.indexOf(null) >= 0;
+  }
+  function nextEmpty(from){ for (var i = 0; i < n; i++){ var k = (from + i) % n; if (fills[k] === null) return k; } return -1; }
+  area.querySelectorAll('.word').forEach(function(w){
+    w.onclick = function(){
+      if (S.answered) return;
+      var t = fills[active] === null ? active : nextEmpty(active);
+      if (t < 0) return;
+      fills[t] = +w.getAttribute('data-w');
+      var ne = nextEmpty(t);
+      active = ne < 0 ? t : ne;
+      draw();
+    };
+  });
+  area.querySelectorAll('.slot').forEach(function(s){
+    s.onclick = function(){
+      if (S.answered) return;
+      var k = +s.getAttribute('data-s');
+      fills[k] = null; active = k; draw();
+    };
+  });
+  check.onclick = function(){
+    if (S.answered || fills.indexOf(null) >= 0) return;
+    var ok = true;
+    area.querySelectorAll('.slot').forEach(function(s){
+      var k = +s.getAttribute('data-s');
+      var good = fills[k] === k;
+      if (!good) ok = false;
+      s.classList.add(good ? 'ok' : 'bad');
+      s.disabled = true;
+    });
+    finish(q, ok, ok ? '' : 'Richtig ist: ' + q.answers.map(function(a, i){ return (i + 1) + '. ' + esc(a); }).join(' · '));
+    draw();
+  };
+  draw();
+};
+RENDER.order = function(q, perm, area){
+  var picked = [];
+  area.innerHTML = '<p class="bank-l">Tippe zuerst den ersten Schritt an, dann den zweiten und so weiter. Tippe die letzte Nummer noch einmal an, um sie zurückzunehmen.</p>' +
+    '<div class="steps">' + perm.o.map(function(i){ return '<button class="step" type="button" data-step="' + i + '"><span class="no"></span><span>' + esc(q.steps[i]) + '</span></button>'; }).join('') + '</div>' +
+    '<div class="row-btns"><button class="btn ghost" id="reset" type="button">Zurücksetzen</button><button class="btn primary" id="check" type="button" disabled>Prüfen</button></div>';
+  var check = document.getElementById('check');
+  function draw(){
+    area.querySelectorAll('.step').forEach(function(b){
+      var i = +b.getAttribute('data-step'); var pos = picked.indexOf(i);
+      b.classList.toggle('picked', pos >= 0);
+      b.querySelector('.no').textContent = pos >= 0 ? (pos + 1) : '';
+    });
+    check.disabled = S.answered || picked.length < q.steps.length;
+  }
+  area.querySelectorAll('.step').forEach(function(b){
+    b.onclick = function(){
+      if (S.answered) return;
+      var i = +b.getAttribute('data-step'); var pos = picked.indexOf(i);
+      if (pos < 0) picked.push(i); else if (pos === picked.length - 1) picked.pop();
+      draw();
+    };
+  });
+  document.getElementById('reset').onclick = function(){ if (S.answered) return; picked = []; draw(); };
+  check.onclick = function(){
+    if (S.answered || picked.length < q.steps.length) return;
+    var ok = picked.every(function(v, k){ return v === k; });
+    area.querySelectorAll('.step').forEach(function(b){
+      var i = +b.getAttribute('data-step');
+      b.classList.add(picked.indexOf(i) === i ? 'ok' : 'bad'); b.disabled = true;
+    });
+    document.getElementById('reset').disabled = true;
+    finish(q, ok, ok ? '' : 'Richtige Reihenfolge:<ol>' + q.steps.map(function(s){ return '<li>' + esc(s) + '</li>'; }).join('') + '</ol>');
+    draw();
+  };
+  draw();
+};
+function parseNum(s){
+  s = String(s).replace(/€|\s/g, '');
+  if (s.indexOf(',') >= 0 && s.indexOf('.') >= 0) s = s.replace(/\./g, '').replace(',', '.');
+  else s = s.replace(',', '.');
+  if (!/^-?\d+(\.\d+)?$/.test(s)) return NaN;
+  return parseFloat(s);
+}
+RENDER.num = function(q, perm, area){
+  area.innerHTML = '<div class="numrow"><label class="numwrap" id="numWrap"><span class="sr">Deine Antwort</span><input id="numIn" type="text" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Zahl eingeben" enterkeyhint="done">' + (q.unit ? '<span>' + esc(q.unit) + '</span>' : '') + '</label>' +
+    '<button class="btn primary" id="check" type="button">Prüfen</button></div><p class="err" id="err" aria-live="polite"></p>';
+  var inp = document.getElementById('numIn');
+  function go(){
+    if (S.answered) return;
+    var v = parseNum(inp.value);
+    if (isNaN(v)){ document.getElementById('err').textContent = 'Bitte gib eine Zahl ein, zum Beispiel 12,5.'; return; }
+    document.getElementById('err').textContent = '';
+    var ok = Math.abs(v - q.a) < 0.005;
+    inp.readOnly = true; inp.blur();
+    document.getElementById('numWrap').classList.add(ok ? 'ok' : 'bad');
+    document.getElementById('check').disabled = true;
+    finish(q, ok, ok ? '' : 'Richtig ist: ' + num(q.a) + (q.unit ? ' ' + q.unit : '') + '.');
+  }
+  document.getElementById('check').onclick = go;
+  inp.addEventListener('keydown', function(e){ if (e.key === 'Enter'){ e.preventDefault(); go(); } });
+};
+RENDER.opinion = function(q, perm, area){
+  var choice = null;
+  area.innerHTML = '<p class="bank-l">Hier gibt es kein Richtig oder Falsch und keine Punkte. Deine Meinung zählt.</p><div class="opts">' + perm.o.map(function(oi, k){
+    return '<button class="opt" type="button" data-i="' + oi + '"><span class="lt">' + LET[k] + '</span><span>' + esc(q.opts[oi]) + '</span></button>';
+  }).join('') + '</div><div id="opArea"></div>';
+  area.querySelectorAll('.opt').forEach(function(b){
+    b.onclick = function(){
+      if (S.answered) return;
+      choice = +b.getAttribute('data-i');
+      area.querySelectorAll('.opt').forEach(function(x){ x.classList.toggle('sel', x === b); });
+      var op = document.getElementById('opArea');
+      if (!op.innerHTML){
+        op.innerHTML = '<div class="op-area"><p class="op-start">Ich finde das am fairsten, weil …</p>' +
+          '<textarea id="opText" aria-label="Deine Begründung" placeholder="… schreib hier weiter (mindestens 5 Wörter)"></textarea>' +
+          '<p class="wc" id="wc">0 von 5 Wörtern</p>' +
+          '<div class="row-btns"><button class="btn primary" id="opDone" type="button" disabled>Fertig</button></div></div>';
+        var ta = document.getElementById('opText'), wc = document.getElementById('wc'), done = document.getElementById('opDone');
+        ta.addEventListener('input', function(){
+          var n = ta.value.trim() ? ta.value.trim().split(/\s+/).filter(function(w){ return /[A-Za-zÄÖÜäöüß0-9]/.test(w); }).length : 0;
+          wc.textContent = n + ' von 5 Wörtern' + (n >= 5 ? ' – gut!' : '');
+          wc.classList.toggle('okc', n >= 5);
+          done.disabled = n < 5;
+        });
+        done.onclick = function(){
+          if (S.answered || done.disabled || choice === null) return;
+          S.answered = true; save(); updateHeader();
+          ta.readOnly = true; done.disabled = true;
+          area.querySelectorAll('.opt').forEach(function(x){ x.disabled = true; });
+          showFeedback('<div class="fb neutral" id="feedback" data-ok="opinion" role="status"><div class="fb-h">Danke für deine Meinung!</div><p>' + esc(q.info) + '</p><button class="btn primary full" id="next" type="button">Weiter' + I.arrow + '</button></div>');
+        };
+      }
+    };
+  });
+};
+
+/* ---------- Start ---------- */
+var saved = load();
+if (saved) S = null;
+renderStart();
+updateHeader();
+})();
+</script>
+</body>
+</html>
