@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<title>Quizzes · Wirtschaft-Politik</title>
+<style>
+:root{
+  --accent:#7B2D43; --slate:#2F4A5C; --bg:#F6F1EA; --surface:#ffffff; --mist:#E6EDF1;
+  --text:#1c2830; --muted:#566570; --line:#d6dde2;
+  --shadow:0 1px 2px rgba(20,35,45,.06),0 6px 20px rgba(20,35,45,.08);
+  --font:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --accent:#b85674; --slate:#1e3342; --bg:#11181d; --surface:#1b252c; --mist:#22303a; --text:#e8eef1; --muted:#a3b2bc; --line:#33434e; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:19px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+.wrap{width:100%;max-width:760px;margin:0 auto;padding:0 20px}
+header{background:var(--slate);color:#fff;padding:calc(28px + env(safe-area-inset-top)) 0 30px}
+.kicker{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.8;margin:0 0 4px}
+h1{font-size:34px;line-height:1.15;margin:0}
+header p.sub{margin:8px 0 0;opacity:.9;font-size:19px}
+main{flex:1;padding:26px 0 30px}
+.tiles{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.tile{display:flex;gap:18px;align-items:center;background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;text-decoration:none;color:inherit;border-left:8px solid var(--accent);min-height:96px;transition:transform .15s}
+.tile:active{transform:scale(.99)}
+.tile:hover h2{text-decoration:underline}
+.ico{flex:none;width:64px;height:64px;border-radius:16px;background:var(--mist);color:var(--slate);display:grid;place-items:center}
+@media (prefers-color-scheme: dark){.ico{color:#cfe0ea}}
+.ico svg{width:42px;height:42px}
+.tile h2{margin:0 0 4px;font-size:23px;line-height:1.25;color:var(--slate)}
+@media (prefers-color-scheme: dark){.tile h2{color:#cfe0ea}}
+.meta{display:flex;flex-wrap:wrap;gap:8px;font-size:16px}
+.meta span{background:var(--mist);border-radius:999px;padding:3px 12px}
+.new{background:var(--accent)!important;color:#fff;font-weight:700}
+.go{margin-left:auto;flex:none;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center}
+.go svg{width:22px;height:22px}
+.hint{color:var(--muted);font-size:16px;margin:18px 0 0}
+footer{font-size:14px;color:var(--muted);text-align:center;padding:14px 20px calc(18px + env(safe-area-inset-bottom))}
+@media (max-width:560px){ h1{font-size:28px} .tile{padding:16px} .ico{width:52px;height:52px} .go{display:none} }
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="kicker">Gesamtschule · Lernquizzes</p>
+    <h1>Quizzes · Wirtschaft-Politik</h1>
+    <p class="sub">Tippe ein Quiz an und leg los.</p>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <ul class="tiles">
+      <!-- Neueste Quizzes oben. Pro Unterordner eine Kachel. -->
+      <li>
+        <a class="tile" href="soziale-marktwirtschaft-rente/">
+          <span class="ico"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M32 10v42M20 54h24M12 18h40"/><circle cx="32" cy="12" r="3"/><path d="M12 18L5 36M12 18l7 18M52 18l-7 18M52 18l7 18"/><path d="M3 36h18a9 7 0 0 1-18 0zM43 36h18a9 7 0 0 1-18 0z"/></svg></span>
+          <span>
+            <h2>Soziale Marktwirtschaft &amp; Rente</h2>
+            <span class="meta"><span class="new">Neu</span><span>Klasse 10</span><span>05.11.2026</span><span>42 Aufgaben · ca. 20 Min.</span></span>
+          </span>
+          <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </li>
+    </ul>
+    <p class="hint">Dein Spielstand bleibt auf diesem Gerät, falls du die Seite aus Versehen neu lädst.</p>
+  </div>
+</main>
+<footer>Wirtschaft-Politik · Klasse 10 · Stand der Zahlen: November 2026</footer>
+</body>
+</html>
