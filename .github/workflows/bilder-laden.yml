@@ -1,0 +1,47 @@
+# Lädt die in */img/quellen.txt eingetragenen Fotos herunter, verkleinert sie
+# (max. 1600 px breit, max. ca. 350 KB, ohne Metadaten) und committet sie in den Branch.
+# Grund: Cloud-Sitzungen können Bild-Server oft nicht direkt erreichen.
+name: Bilder laden
+on:
+  push:
+    paths: ['**/img/quellen.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  bilder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bilder herunterladen und verkleinern
+        run: |
+          pip install --quiet pillow
+          python3 - <<'PY'
+          import glob, io, os, urllib.request
+          from PIL import Image
+          for q in glob.glob('**/img/quellen.txt', recursive=True):
+              d = os.path.dirname(q)
+              for line in open(q, encoding='utf-8'):
+                  line = line.strip()
+                  if not line or line.startswith('#'):
+                      continue
+                  name, url = line.split(None, 1)
+                  out = os.path.join(d, name)
+                  if os.path.exists(out):
+                      print('vorhanden:', out); continue
+                  req = urllib.request.Request(url, headers={'User-Agent': 'quiz-marktwirtschaft-bilder/1.0'})
+                  im = Image.open(io.BytesIO(urllib.request.urlopen(req, timeout=60).read())).convert('RGB')
+                  if im.width > 1600:
+                      im = im.resize((1600, round(im.height * 1600 / im.width)), Image.LANCZOS)
+                  for qual in (82, 78, 74, 70, 66, 62, 58, 54, 50):
+                      buf = io.BytesIO(); im.save(buf, 'JPEG', quality=qual, optimize=True, progressive=True)
+                      if buf.tell() <= 350 * 1024: break
+                  open(out, 'wb').write(buf.getvalue())
+                  print(out, im.size, buf.tell() // 1024, 'KB, Qualitaet', qual)
+          PY
+      - name: Committen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add -A '*.jpg'
+          git diff --cached --quiet || (git commit -m "Bilder geladen und verkleinert" && git push)

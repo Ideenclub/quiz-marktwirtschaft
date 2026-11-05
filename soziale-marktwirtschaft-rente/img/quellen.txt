@@ -1,0 +1,3 @@
+# Dateiname  Quelle (wird vom Workflow "Bilder laden" heruntergeladen, auf max. 1600 px Breite und max. 350 KB gebracht)
+bild1-jung-und-alt.jpg https://images.unsplash.com/photo-1464998857633-50e59fbf2fe6?fm=jpg&q=85&w=1600
+bild2-azubi.jpg https://images.unsplash.com/photo-1538080204498-afe921550d75?fm=jpg&q=85&w=1600
