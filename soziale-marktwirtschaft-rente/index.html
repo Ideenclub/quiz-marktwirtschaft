@@ -52,10 +52,11 @@ a{color:inherit}
 .segs{display:flex;gap:6px;margin-top:6px}
 .seg{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.22);overflow:hidden}
 .seg i{display:block;height:100%;width:0;background:#f1c9d4;border-radius:99px;transition:width .35s ease}
-.streak{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:700;background:#f1c9d4;color:#4a1626;padding:3px 10px;border-radius:999px}
-.streak.pop{animation:pop .6s ease}
+.prog-meta #streak{flex:none;display:flex;min-width:max-content;margin-left:auto}
+.streak{white-space:nowrap;transform-origin:right center;display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:700;background:#f1c9d4;color:#4a1626;padding:3px 10px;border-radius:999px}
+.streak.popin{animation:pop .6s ease}
 @keyframes pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
-.streak svg{width:16px;height:16px}
+.streak svg{width:16px;height:16px;flex:none}
 /* Hauptbereich */
 main{flex:1;padding:24px 0 28px}
 .screen{animation:fade .3s ease}
@@ -641,7 +642,7 @@ function updateHeader(){
 function renderStreak(popIt){
   var el = document.getElementById('streak');
   if (S && S.phase !== 'retry' && S.streak >= 3){
-    el.innerHTML = '<span class="streak' + (popIt ? ' pop' : '') + '" id="streakBadge">' + I.bolt + S.streak + 'er-Serie</span>';
+    el.innerHTML = '<span class="streak' + (popIt ? ' popin' : '') + '" id="streakBadge">' + I.bolt + S.streak + 'er-Serie</span>';
   } else el.innerHTML = '';
 }
 
